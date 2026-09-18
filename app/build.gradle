@@ -1,0 +1,21 @@
+plugins { id 'com.android.application' }
+
+android {
+    namespace 'com.phsatfinder'
+    compileSdk 37
+
+    defaultConfig {
+        applicationId 'com.phsatfinder'
+        minSdk 29
+        targetSdk 37
+        versionCode 1
+        versionName '1.0'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            shrinkResources false
+        }
+    }
+}
