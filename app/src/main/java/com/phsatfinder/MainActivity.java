@@ -366,14 +366,14 @@ public class MainActivity extends Activity {
             String head=Float.isNaN(heading)?"PHONE —° —":"PHONE "+Math.round(heading)+"° "+dir8(heading);txt(c,head,cx,b+15*d,Math.min(18*d,rr-l-20*d),GOOD,Paint.Align.CENTER,true);
         }
 
-        private void drawTurn(Canvas c,float l,float t,float rr,float b){
+        private void drawTurn(Canvas c,float l,float t,float rr,float b){ float d=density();
             double az=location==null?Double.NaN:calculate(location.getLatitude(),location.getLongitude(),satLon[satIndex])[0];
             String arrow="●", text="Start compass";
             if(!Float.isNaN(heading)&&!Double.isNaN(az)){double diff=signed180((float)(az-heading));double ad=Math.abs(diff);if(ad<2){arrow="✓";text="ALIGNED • within ~2°";}else if(diff>0){arrow="→";text="Turn RIGHT / clockwise "+Math.round(ad)+"°";}else{arrow="←";text="Turn LEFT / counterclockwise "+Math.round(ad)+"°";}}
             txt(c,arrow,l+16*d,t+15*d,14*d,GOOD,Paint.Align.CENTER,true);txt(c,text,l+30*d,t+15*d,9*d,TEXT,Paint.Align.LEFT,true);txt(c,"Target "+(Double.isNaN(az)?"—":fmt(az,1)+"° "+dir8((float)az)),rr-7*d,t+15*d,8*d,GOLD,Paint.Align.RIGHT,true);
         }
 
-        private void drawAlignment(Canvas c,float x,float y,float w,float h){
+        private void drawAlignment(Canvas c,float x,float y,float w,float h){ float d=density();
             txt(c,"SATELLITE ALIGNMENT",x+8*d,y+16*d,10*d,TEXT,Paint.Align.LEFT,true);
             double[] v=location==null?null:calculate(location.getLatitude(),location.getLongitude(),satLon[satIndex]);
             float[] xs={x+w*.18f,x+w*.50f,x+w*.76f,x+w*.76f};
@@ -383,7 +383,7 @@ public class MainActivity extends Activity {
         }
         private String lnbClock(double skew){double hour=(6+(-skew)/30)%12;if(hour<0)hour+=12;int h=(int)Math.floor(hour);int min=(int)Math.round((hour-h)*60);if(h==0)h=12;if(min==60){h=h%12+1;min=0;}return h+":"+String.format(Locale.US,"%02d",min);}
 
-        private void drawSensors(Canvas c,float x,float y,float w,float h){
+        private void drawSensors(Canvas c,float x,float y,float w,float h){ float d=density();
             txt(c,"REAL-TIME SENSORS",x+8*d,y+16*d,10*d,TEXT,Paint.Align.LEFT,true);
             String coords=location==null?"GPS position —":String.format(Locale.US,"%.6f° N • %.6f° E • ±%.1f m",location.getLatitude(),location.getLongitude(),(double)location.getAccuracy());
             txt(c,sensorState,x+8*d,y+36*d,9*d,sensorStarted?GOOD:MUTED,Paint.Align.LEFT,true);
@@ -393,7 +393,7 @@ public class MainActivity extends Activity {
             txt(c,compassState,x+8*d,y+h-10*d,7*d,compassState.startsWith("Compass LIVE")?GOOD:MUTED,Paint.Align.LEFT,false);
         }
 
-        private void drawClock(Canvas c,float x,float y,float w,float h){
+        private void drawClock(Canvas c,float x,float y,float w,float h){ float d=density();
             float cx=x+w/2, cy=y+h/2+4*d, rad=Math.min(w*.36f,h*.43f);stroke.setColor(Color.rgb(41,77,118));stroke.setStrokeWidth(2*d);c.drawCircle(cx,cy,rad,stroke);stroke.setStrokeWidth(1*d);stroke.setColor(Color.rgb(25,75,115));c.drawCircle(cx,cy,rad*.78f,stroke);
             txt(c,"12",cx,cy-rad*.68f+4*d,10*d,TEXT,Paint.Align.CENTER,true);txt(c,"3",cx+rad*.68f,cy+4*d,10*d,TEXT,Paint.Align.CENTER,true);txt(c,"6",cx,cy+rad*.68f+4*d,10*d,TEXT,Paint.Align.CENTER,true);txt(c,"9",cx-rad*.68f,cy+4*d,10*d,TEXT,Paint.Align.CENTER,true);
             for(int i=0;i<12;i++){double a=Math.toRadians(i*30-90);txt(c,(i*30)+"°",cx+(float)Math.cos(a)*rad*.86f,cy+(float)Math.sin(a)*rad*.86f+3*d,6*d,Color.rgb(208,221,236),Paint.Align.CENTER,false);}
