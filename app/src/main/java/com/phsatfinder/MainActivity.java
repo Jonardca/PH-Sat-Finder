@@ -294,7 +294,7 @@ public class MainActivity extends Activity {
             p.setColor(BG); c.drawRect(0,0,w,h,p);
             drawHeader(c,w,d);
             drawTopbar(c,w,d);
-            float footerH=62*d;
+            float footerH=78*d;
             float dashTop=100*d, dashBottom=h-footerH;
             drawDashboard(c,w,d,dashTop,dashBottom);
             drawFooter(c,w,d,h-footerH,h);
@@ -341,7 +341,7 @@ public class MainActivity extends Activity {
             drawTurn(c,8*d,bottom-23*d,leftW,bottom-2*d);
 
             float y=top;
-            float ah=94*d; panel(c,rightX,y,rightX+rightW,y+ah); drawAlignment(c,rightX,y,rightW,ah);
+            float ah=112*d; panel(c,rightX,y,rightX+rightW,y+ah); drawAlignment(c,rightX,y,rightW,ah);
             y+=ah+gap; float sh=105*d; panel(c,rightX,y,rightX+rightW,y+sh); drawSensors(c,rightX,y,rightW,sh);
             y+=sh+gap; panel(c,rightX,y,rightX+rightW,bottom-2*d); drawClock(c,rightX,y,rightW,bottom-2*d-y);
         }
@@ -356,14 +356,14 @@ public class MainActivity extends Activity {
             stroke.setStrokeWidth(1*d); stroke.setColor(Color.rgb(40,98,142)); c.drawCircle(cx,cy,rad*.91f,stroke); stroke.setColor(Color.rgb(25,75,115)); c.drawCircle(cx,cy,rad*.81f,stroke);
             for(int deg=0;deg<360;deg+=3){double a=Math.toRadians(deg-90);float outer=rad*.96f;float inner=(deg%45==0)?rad*.84f:rad*.91f;stroke.setStrokeWidth(deg%45==0?2*d:1*d);stroke.setColor(deg%45==0?CYAN:Color.rgb(49,191,249));c.drawLine(cx+(float)Math.cos(a)*inner,cy+(float)Math.sin(a)*inner,cx+(float)Math.cos(a)*outer,cy+(float)Math.sin(a)*outer,stroke);}
             String[] dirs={"N","NE","E","SE","S","SW","W","NW"};
-            for(int i=0;i<8;i++){double a=Math.toRadians(i*45-90);float tx=cx+(float)Math.cos(a)*rad*.72f, ty=cy+(float)Math.sin(a)*rad*.72f+5*d;txt(c,dirs[i],tx,ty,(i%2==0?22:13)*d,TEXT,Paint.Align.CENTER,true);}
-            for(int i=0;i<8;i++){double a=Math.toRadians(i*45-90);float tx=cx+(float)Math.cos(a)*rad*.89f, ty=cy+(float)Math.sin(a)*rad*.89f+4*d;txt(c,(i*45)+"°",tx,ty,9*d,Color.rgb(208,221,236),Paint.Align.CENTER,true);}
+            for(int i=0;i<8;i++){double a=Math.toRadians(i*45-90);float tx=cx+(float)Math.cos(a)*rad*.63f, ty=cy+(float)Math.sin(a)*rad*.63f+5*d;txt(c,dirs[i],tx,ty,(i%2==0?20:12)*d,TEXT,Paint.Align.CENTER,true);}
+            for(int i=0;i<8;i++){double a=Math.toRadians(i*45-90);float tx=cx+(float)Math.cos(a)*rad*.90f, ty=cy+(float)Math.sin(a)*rad*.90f+4*d;txt(c,(i*45)+"°",tx,ty,8*d,Color.rgb(208,221,236),Paint.Align.CENTER,true);}
             double[] calc=location==null?null:calculate(location.getLatitude(),location.getLongitude(),satLon[satIndex]);
             if(calc!=null){double a=Math.toRadians(calc[0]-90);float mx=cx+(float)Math.cos(a)*rad*.88f,my=cy+(float)Math.sin(a)*rad*.88f;Path tri=new Path();tri.moveTo(mx,my-9*d);tri.lineTo(mx-8*d,my+7*d);tri.lineTo(mx+8*d,my+7*d);tri.close();p.setColor(GOLD);p.setStyle(Paint.Style.FILL);c.drawPath(tri,p);}
             c.restore();
             p.setColor(RED);p.setStyle(Paint.Style.FILL);Path pointer=new Path();pointer.moveTo(cx,cy-rad*.93f);pointer.lineTo(cx-10*d,cy-rad*.93f+25*d);pointer.lineTo(cx+10*d,cy-rad*.93f+25*d);pointer.close();c.drawPath(pointer,p);
             p.setColor(Color.rgb(181,220,255));c.drawCircle(cx,cy,20*d, p);p.setColor(Color.rgb(16,28,46));c.drawCircle(cx,cy,14*d,p);
-            String head=Float.isNaN(heading)?"PHONE —° —":"PHONE "+Math.round(heading)+"° "+dir8(heading);txt(c,head,cx,b+15*d,Math.min(18*d,rr-l-20*d),GOOD,Paint.Align.CENTER,true);
+            String head=Float.isNaN(heading)?"PHONE —° —":"PHONE "+Math.round(heading)+"° "+dir8(heading);txt(c,head,cx,b-8*d,Math.min(15*d,rr-l-20*d),GOOD,Paint.Align.CENTER,true);
         }
 
         private void drawTurn(Canvas c,float l,float t,float rr,float b){ float d=density();
@@ -376,10 +376,9 @@ public class MainActivity extends Activity {
         private void drawAlignment(Canvas c,float x,float y,float w,float h){ float d=density();
             txt(c,"SATELLITE ALIGNMENT",x+8*d,y+16*d,10*d,TEXT,Paint.Align.LEFT,true);
             double[] v=location==null?null:calculate(location.getLatitude(),location.getLongitude(),satLon[satIndex]);
-            float[] xs={x+w*.18f,x+w*.50f,x+w*.76f,x+w*.76f};
             String[] labs={"AZIMUTH","ELEVATION","LNB SKEW","LNB CLOCK"};
             String[] vals={v==null?"—":fmt(v[0],1)+"°",v==null?"—":fmt(v[1],1)+"°",v==null?"—":(v[2]>=0?"+":"")+fmt(v[2],1)+"°",v==null?"—":lnbClock(v[2])};
-            for(int i=0;i<4;i++){float xx=(i<2?x+(i+.5f)*w/2:x+(i-1.5f)*w/2);txt(c,labs[i],xx,y+38*d,7*d,MUTED,Paint.Align.CENTER,false);txt(c,vals[i],xx,y+56*d,13*d,i==2||i==3?Color.rgb(169,135,255):GOOD,Paint.Align.CENTER,true);}
+            for(int i=0;i<4;i++){float xx=x+(i%2==0?w*.25f:w*.75f);float yy=y+(i<2?39:74)*d;txt(c,labs[i],xx,yy,6*d,MUTED,Paint.Align.CENTER,false);txt(c,vals[i],xx,yy+16*d,11*d,i==2||i==3?Color.rgb(169,135,255):GOOD,Paint.Align.CENTER,true);}
         }
         private String lnbClock(double skew){double hour=(6+(-skew)/30)%12;if(hour<0)hour+=12;int h=(int)Math.floor(hour);int min=(int)Math.round((hour-h)*60);if(h==0)h=12;if(min==60){h=h%12+1;min=0;}return h+":"+String.format(Locale.US,"%02d",min);}
 
@@ -415,7 +414,7 @@ public class MainActivity extends Activity {
             if(e.getAction()!=MotionEvent.ACTION_UP)return true;
             float d=density(), x=e.getX(), y=e.getY(), h=getHeight(), w=getWidth();
             if(y>=37*d && y<=89*d && x<=w*.42f){ if(callbacks!=null)callbacks.onSatelliteClicked(); return true; }
-            float footerH=62*d;
+            float footerH=78*d;
             if(y>=h-footerH+2*d){
                 if(x<w/2){ if(callbacks!=null)callbacks.onGpsClicked(); }
                 else { if(callbacks!=null)callbacks.onSensorsClicked(); }
