@@ -303,7 +303,7 @@ public class MainActivity extends Activity {
             drawHeader(c,w,d);
             drawTopbar(c,w,d);
             float footerH=90*d;
-            float dashTop=112*d, dashBottom=h-footerH;
+            float dashTop=120*d, dashBottom=h-footerH;
             drawDashboard(c,w,d,dashTop,dashBottom);
             drawFooter(c,w,d,h-footerH,h);
         }
@@ -318,11 +318,11 @@ public class MainActivity extends Activity {
         }
 
         private void drawHeader(Canvas c,float w,float d){
-            txt(c,"PH Sat Finder",8*d,32*d,18*d,TEXT,Paint.Align.LEFT,true);
-            txt(c,"NATIVE ANDROID",8*d,43*d,8*d,CYAN,Paint.Align.LEFT,true);
-            drawBadge(c,w-205*d,10*d,62*d,"GPS",gpsState);
-            drawBadge(c,w-138*d,10*d,62*d,"COMPASS",Float.isNaN(heading)?compassBadge:Math.round(heading)+"°");
-            drawBadge(c,w-71*d,10*d,63*d,"TILT",Float.isNaN(tilt)?"—":Math.round(tilt)+"°");
+            txt(c,"PH Sat Finder",8*d,40*d,18*d,TEXT,Paint.Align.LEFT,true);
+            txt(c,"NATIVE ANDROID",8*d,51*d,8*d,CYAN,Paint.Align.LEFT,true);
+            drawBadge(c,w-205*d,18*d,62*d,"GPS",gpsState);
+            drawBadge(c,w-138*d,18*d,62*d,"COMPASS",Float.isNaN(heading)?compassBadge:Math.round(heading)+"°");
+            drawBadge(c,w-71*d,18*d,63*d,"TILT",Float.isNaN(tilt)?"—":Math.round(tilt)+"°");
         }
 
         private void drawBadge(Canvas c,float x,float y,float bw,String top,String bottom){
@@ -332,7 +332,7 @@ public class MainActivity extends Activity {
         }
 
         private void drawTopbar(Canvas c,float w,float d){
-            float y=49*d, gap=5*d, total=w-16*d, c1=total*.42f, c2=total*.21f, c3=total*.21f, c4=total*.16f;
+            float y=57*d, gap=5*d, total=w-16*d-3*gap, c1=total*.42f, c2=total*.21f, c3=total*.21f, c4=total*.16f;
             float x=8*d;
             panel(c,x,y,x+c1,y+52*d); txt(c,"SATELLITE",x+7*d,y+11*d,8*d,MUTED,Paint.Align.LEFT,false); txt(c,satNames[satIndex],x+7*d,y+31*d,11*d,TEXT,Paint.Align.LEFT,true); txt(c,"▼",x+c1-9*d,y+31*d,10*d,CYAN,Paint.Align.RIGHT,true);
             drawMini(c,x+c1+gap,y,c2,"AZIMUTH",location==null?"—":fmt(calculate(location.getLatitude(),location.getLongitude(),satLon[satIndex])[0],1)+"°");
@@ -423,7 +423,7 @@ public class MainActivity extends Activity {
             float d=density(), x=e.getX(), y=e.getY(), h=getHeight(), w=getWidth();
 
             // Match the actual Satellite panel bounds, with a small touch allowance.
-            float topbarY=49*d;
+            float topbarY=57*d;
             float total=w-16*d;
             float satW=total*.42f;
             if(x>=8*d-6*d && x<=8*d+satW+6*d &&
