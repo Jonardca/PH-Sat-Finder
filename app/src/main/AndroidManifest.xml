@@ -7,6 +7,8 @@
     <application
         android:allowBackup="true"
         android:label="PH Sat Finder"
+        android:icon="@drawable/ph_sat_finder_icon"
+        android:roundIcon="@drawable/ph_sat_finder_icon"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="false">
         <activity
