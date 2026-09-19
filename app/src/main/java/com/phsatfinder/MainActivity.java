@@ -302,7 +302,7 @@ public class MainActivity extends Activity {
 
         private float density(){ return getResources().getDisplayMetrics().density; }
         private void txt(Canvas c,String s,float x,float y,float size,int color,Paint.Align align,boolean bold){
-            p.setStyle(Paint.Style.FILL); p.setColor(color); p.setTextSize(size*density()); p.setTextAlign(align); p.setTypeface(Typeface.create("sans",bold?Typeface.BOLD:Typeface.NORMAL)); c.drawText(s,x,y,p);
+            p.setStyle(Paint.Style.FILL); p.setColor(color); p.setTextSize(size); p.setTextAlign(align); p.setTypeface(Typeface.create("sans",bold?Typeface.BOLD:Typeface.NORMAL)); c.drawText(s,x,y,p);
         }
         private void panel(Canvas c,float l,float t,float rr,float b){
             p.setStyle(Paint.Style.FILL); p.setColor(PANEL); r.set(l,t,rr,b); c.drawRoundRect(r,12*density(),12*density(),p);
