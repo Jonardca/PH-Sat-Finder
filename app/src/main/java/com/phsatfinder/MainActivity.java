@@ -347,7 +347,7 @@ public class MainActivity extends Activity {
         }
 
         private void drawCompass(Canvas c,float l,float t,float rr,float b){
-            float cx=(l+rr)/2, cy=(t+b)/2-7*density();
+            float d=density(); float cx=(l+rr)/2, cy=(t+b)/2-7*density();
             float size=Math.min(rr-l-8*density(),b-t-42*density()); size=Math.max(190*density(),Math.min(size,410*density()));
             float rad=size/2;
             Paint gradPaint=new Paint(Paint.ANTI_ALIAS_FLAG); gradPaint.setShader(new RadialGradient(cx,cy,rad,new int[]{Color.rgb(18,36,60),Color.rgb(11,25,45),Color.rgb(2,6,13)},new float[]{0,.60f,1},Shader.TileMode.CLAMP));
