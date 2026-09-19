@@ -294,7 +294,7 @@ public class MainActivity extends Activity {
             p.setColor(BG); c.drawRect(0,0,w,h,p);
             drawHeader(c,w,d);
             drawTopbar(c,w,d);
-            float footerH=78*d;
+            float footerH=90*d;
             float dashTop=100*d, dashBottom=h-footerH;
             drawDashboard(c,w,d,dashTop,dashBottom);
             drawFooter(c,w,d,h-footerH,h);
@@ -310,11 +310,11 @@ public class MainActivity extends Activity {
         }
 
         private void drawHeader(Canvas c,float w,float d){
-            txt(c,"PH Sat Finder",8*d,20*d,18*d,TEXT,Paint.Align.LEFT,true);
-            txt(c,"NATIVE ANDROID",8*d,31*d,8*d,CYAN,Paint.Align.LEFT,true);
-            drawBadge(c,w-205*d,4*d,62*d,"GPS",gpsState);
-            drawBadge(c,w-138*d,4*d,62*d,"COMPASS",Float.isNaN(heading)?compassBadge:Math.round(heading)+"°");
-            drawBadge(c,w-71*d,4*d,63*d,"TILT",Float.isNaN(tilt)?"—":Math.round(tilt)+"°");
+            txt(c,"PH Sat Finder",8*d,25*d,18*d,TEXT,Paint.Align.LEFT,true);
+            txt(c,"NATIVE ANDROID",8*d,36*d,8*d,CYAN,Paint.Align.LEFT,true);
+            drawBadge(c,w-205*d,7*d,62*d,"GPS",gpsState);
+            drawBadge(c,w-138*d,7*d,62*d,"COMPASS",Float.isNaN(heading)?compassBadge:Math.round(heading)+"°");
+            drawBadge(c,w-71*d,7*d,63*d,"TILT",Float.isNaN(tilt)?"—":Math.round(tilt)+"°");
         }
 
         private void drawBadge(Canvas c,float x,float y,float bw,String top,String bottom){
@@ -413,8 +413,18 @@ public class MainActivity extends Activity {
         @Override public boolean onTouchEvent(MotionEvent e){
             if(e.getAction()!=MotionEvent.ACTION_UP)return true;
             float d=density(), x=e.getX(), y=e.getY(), h=getHeight(), w=getWidth();
-            if(y>=37*d && y<=89*d && x<=w*.42f){ if(callbacks!=null)callbacks.onSatelliteClicked(); return true; }
-            float footerH=78*d;
+
+            // Match the actual Satellite panel bounds, with a small touch allowance.
+            float topbarY=37*d;
+            float total=w-16*d;
+            float satW=total*.42f;
+            if(x>=8*d-6*d && x<=8*d+satW+6*d &&
+               y>=topbarY-6*d && y<=topbarY+52*d+6*d){
+                if(callbacks!=null)callbacks.onSatelliteClicked();
+                return true;
+            }
+
+            float footerH=90*d;
             if(y>=h-footerH+2*d){
                 if(x<w/2){ if(callbacks!=null)callbacks.onGpsClicked(); }
                 else { if(callbacks!=null)callbacks.onSensorsClicked(); }
