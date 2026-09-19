@@ -171,16 +171,24 @@ public class MainActivity extends Activity {
 
     @Override protected void onResume() {
         super.onResume();
-        if (finderView != null && finderView.isSensorStarted()) startSensors();
-        if (finderView != null && finderView.hasGpsStarted()) startGps();
+        if (finderView != null) {
+            startSensors();
+            startGps();
+        }
     }
 
     @Override protected void onPause() {
-        super.onPause();
-        if (sensorManager != null) sensorManager.unregisterListener(sensorListener);
+        if (sensorManager != null) {
+            sensorManager.unregisterListener(sensorListener);
+        }
         if (locationManager != null) {
             try { locationManager.removeUpdates(locationListener); } catch (SecurityException ignored) { }
         }
+        if (finderView != null) {
+            finderView.markSensorsStopped();
+            finderView.markGpsStopped();
+        }
+        super.onPause();
     }
 
     @Override protected void onDestroy() {
@@ -238,7 +246,9 @@ public class MainActivity extends Activity {
         void setCallbacks(Callbacks c) { callbacks = c; }
         boolean isSensorStarted() { return sensorStarted; }
         void setSensorStarted(boolean b) { sensorStarted = b; sensorState = "Motion sensor ACTIVE"; invalidate(); }
+        void markSensorsStopped() { sensorStarted = false; invalidate(); }
         boolean hasGpsStarted() { return gpsStarted; }
+        void markGpsStopped() { gpsStarted = false; invalidate(); }
 
         void setGpsState(String state, String badge) { gpsStarted = true; gpsState = state; gpsBadge = badge; invalidate(); }
 
