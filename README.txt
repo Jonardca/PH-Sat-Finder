@@ -1,64 +1,42 @@
-PH Sat Finder
+PH SAT FINDER - Android WebView APK project
 
-A mobile satellite dish alignment tool for the Philippines.
+Target: Android 10 (API 29) and newer.
 
-PH Sat Finder is an Android application designed to help users align satellite dishes using their phone's GPS location, compass heading, and motion sensors.
+The v7 HTML interface is bundled locally in the APK, so the app does not need the Python server.
+Internet permission is retained because the page may use online resources; GPS and motion sensors are local device features.
 
-The app provides a visual satellite aiming guide to help users find the correct direction and elevation for satellite television setup.
+Android build configuration:
+- Minimum SDK: Android 10 (API 29)
+- Target SDK: Android 16 (API 36)
+- Compile SDK: Android 16 (API 36)
+- Android Gradle Plugin (AGP): 9.4.0
+- Gradle: 9.7.1
+- JDK: 17
+- Android Build Tools: 36.0.0
 
-Features
+The project has been successfully built using GitHub Actions with the configuration above.
 
-- GPS-based location support
-- Phone compass and heading display
-- Satellite azimuth and elevation guidance
-- LNB skew / rotation guide
-- Visual dish alignment interface
-- Local HTML interface bundled inside the Android APK
-- No Python server required
+Build with Android Studio:
+1. Open this folder as a project.
+2. Make sure JDK 17 is selected.
+3. Make sure Android SDK Platform 36 and Build Tools 36.0.0 are installed.
+4. Let Gradle sync.
+5. Build > Build APK(s).
+6. The debug APK will be under:
+   app/build/outputs/apk/debug/app-debug.apk
 
-Supported Satellite Services
+Build with GitHub Actions:
+The repository includes a GitHub Actions workflow at:
+.github/workflows/build-apk.yml
 
-The app includes satellite references for:
+The workflow automatically builds the debug APK when changes are pushed to the main branch.
 
-- Cignal — SES-7
-- GSAT — SES-9
-- Satlite — Koreasat 7
+Permissions requested:
+- Location (fine/coarse) for GPS.
+- Internet for web resources.
 
-Android Compatibility
+No separate permission is required for the motion sensors used by the HTML app.
 
-- Android 10 and newer
-- Minimum SDK: API 29
-
-Technology
-
-PH Sat Finder uses an HTML-based interface packaged inside an Android WebView application.
-
-The interface is built with web technologies and runs locally within the APK. Android provides access to device features such as GPS and motion sensors.
-
-This project is not a fully native Kotlin interface.
-
-Installation
-
-Download the available APK from the project's GitHub Actions artifacts or Releases, if published.
-
-Install the APK on an Android 10 or newer device and grant the required location permission for GPS functionality.
-
-Build
-
-The project includes a GitHub Actions workflow for building the Android APK.
-
-The debug APK is generated at:
-
+APK:
+The successful debug build produces:
 app/build/outputs/apk/debug/app-debug.apk
-
-Project Status
-
-Version 2.0.0
-
-The Android 10+ version is retained as the preferred APK release.
-
-Developer
-
-Created by "Jonardca" (https://github.com/Jonardca)
-
-GitHub Repository: "PH-Sat-Finder" (https://github.com/Jonardca/PH-Sat-Finder)
